@@ -2,6 +2,7 @@
 
 import { v4 as uuidv4 } from "uuid";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { NavLinks } from "@/utils/NavLinks";
 
 import Image from "next/image";
@@ -9,18 +10,25 @@ import Link from "next/link";
 
 const Header = () => {
   // ========== Authentication Status ===========
-  const session = false;
+  const session = true;
   const isAdmin = false;
 
   // ========== PathName ===========
   const path = usePathname();
 
+  // ========== Menu State ===========
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // ========== Toggle Menu ===========
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
   // ========== Logout Handler ===========
   const handleLogout = () => {
-    // Implement logout functionality
     console.log("Logged out");
+    setMenuOpen(false);
   };
 
+  // ========== Rendering ===========
   return (
     <header className="flex items-center justify-between px-6 py-4 shadow-lg rounded-md">
       {/* Logo Section */}
@@ -36,54 +44,132 @@ const Header = () => {
         </Link>
       </div>
 
-      {/* Navigation Links */}
-      <nav className="flex space-x-6">
+      {/* Desktop Navigation */}
+      <nav className="hidden md:flex space-x-6">
         {NavLinks.map((link) => (
           <Link
             href={link.path}
             key={uuidv4()}
-            className={`${
+            className={`hover:text-gray-600 transition-colors ${
               path === link.path
                 ? "text-blue-600 font-semibold"
-                : "text-gray-100"
-            } hover:text-gray-700 transition-colors`}
+                : "text-gray-200"
+            }`}
           >
             {link.title}
           </Link>
         ))}
-        {/* Conditional Admin Link */}
-        {isAdmin && (
+        {session && isAdmin && (
           <Link
             href="/admin"
-            className={`${
-              path === "/admin"
-                ? "text-blue-600 font-semibold"
-                : "text-gray-100"
-            } hover:text-gray-900 transition-colors`}
+            className="text-gray-200 hover:text-gray-600 transition-colors"
           >
-            Admin
+            Admin Panel
           </Link>
         )}
       </nav>
 
       {/* Authentication Buttons */}
-      <div className="flex space-x-4">
+      <div className="hidden md:flex space-x-4">
         {session ? (
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+            className="text-blue-600 bg-gray-200 py-1 px-6 hover:bg-transparent hover:text-gray-200 rounded-lg transition"
           >
             Logout
           </button>
         ) : (
           <Link
             href="/login"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+            className="text-blue-600 hover:text-blue-800 transition"
           >
             Login
           </Link>
         )}
       </div>
+
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden text-gray-200 focus:outline-none"
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        {menuOpen ? (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        ) : (
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        )}
+      </button>
+
+      {/* Mobile Navigation Menu */}
+      {menuOpen && (
+        <div className="absolute top-16 left-0 w-full bg-purple-900 rounded-md shadow-md p-4 md:hidden transition-transform transform">
+          <nav className="flex flex-col items-center space-y-4">
+            {NavLinks.map((link) => (
+              <Link
+                href={link.path}
+                key={uuidv4()}
+                className={`hover:text-gray-600 transition-colors ${
+                  path === link.path
+                    ? "text-blue-600 font-semibold"
+                    : "text-gray-200"
+                }`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.title}
+              </Link>
+            ))}
+            {session && isAdmin && (
+              <Link
+                href="/admin"
+                className="text-gray-200 hover:text-gray-600 transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Admin Panel
+              </Link>
+            )}
+            {session ? (
+              <button
+                onClick={handleLogout}
+                className="text-blue-600 bg-gray-200 py-1 px-6 hover:bg-transparent hover:text-gray-200 rounded-lg transition"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                className="text-blue-600 hover:text-blue-800 transition"
+              >
+                Login
+              </Link>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
