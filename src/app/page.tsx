@@ -37,6 +37,8 @@ const Home = () => {
           alt="agency illustration"
           width={600}
           height={600}
+          quality={75}
+          unoptimized
           className="rounded-lg shadow-md"
         />
       </div>
