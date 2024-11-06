@@ -14,14 +14,16 @@ const PostCard = ({ post }: PostCardProps) => {
       {/* Image and Date */}
       <div className="flex relative">
         {/* Image Container */}
-        <div className="w-full h-[300px] md:h-[400px] relative rounded-lg overflow-hidden">
-          <Image
-            src="https://res.cloudinary.com/deyw9xwwr/image/upload/v1730835931/otkj7mcazmifol1stc5q.jpg"
-            alt="blog"
-            fill
-            className="object-cover transition-transform duration-300 hover:scale-105"
-          />
-        </div>
+        {post.img && (
+          <div className="w-full h-[300px] md:h-[400px] relative rounded-lg overflow-hidden">
+            <Image
+              src="https://res.cloudinary.com/deyw9xwwr/image/upload/v1730835931/otkj7mcazmifol1stc5q.jpg"
+              alt="blog"
+              fill
+              className="object-cover transition-transform duration-300 hover:scale-105"
+            />
+          </div>
+        )}
 
         {/* Date */}
         <span className="absolute top-2 right-2 md:right-4 text-sm md:text-base bg-blue-500 text-white px-3 py-1 rounded-md font-semibold transform rotate-90">
@@ -34,9 +36,9 @@ const PostCard = ({ post }: PostCardProps) => {
         <h1 className="text-2xl font-bold text-gray-400">
           {getImportanceTitle(post.title)}
         </h1>
-        <p className="text-gray-300">{post.body}</p>
+        <p className="text-gray-300">{post.desc}</p>
         <Link
-          href={`/blog/${post.id}`}
+          href={`/blog/${post.slug}`}
           className="text-blue-600 font-semibold hover:underline"
         >
           READ MORE

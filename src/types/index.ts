@@ -1,9 +1,11 @@
 
 export interface PostProps {
     userId: number;
-    id: number;
+    slug: string;
     title: string;
-    body: string;
+    desc: string;
+    img: string;
+    createdAt: Date
 }
 
 export interface BlogPageProps {
@@ -22,5 +24,5 @@ export interface User {
 }
 
 export interface PostUserProps {
-    userId: number
+    userId: string
 }

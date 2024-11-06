@@ -19,7 +19,7 @@ export const getDatas = async () => {
 export const getData = async (slug: string) => {
     try {
         connectDB()
-        const post = await Post.find({ slug });
+        const post = await Post.findOne({ slug });
         if (!post) {
             throw new Error("Post not found");
         }

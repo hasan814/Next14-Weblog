@@ -20,20 +20,27 @@ const SinglePage = async ({ post }: SinglePostPage) => {
       </Link>
 
       {/* Main Image Section */}
-      <div className="relative w-full h-[200px] md:h-[300px] lg:h-[400px] mb-6">
-        <Image
-          src="https://res.cloudinary.com/deyw9xwwr/image/upload/v1730835931/otkj7mcazmifol1stc5q.jpg"
-          alt="single post"
-          fill
-          className="object-cover rounded-lg shadow-md"
-        />
-      </div>
+      {post.img && (
+        <div className="relative w-full h-[200px] md:h-[300px] lg:h-[400px] mb-6">
+          <Image
+            src={post.img}
+            alt="single post"
+            fill
+            className="object-cover rounded-lg shadow-md"
+          />
+        </div>
+      )}
 
       {/* Post Content Section */}
       <div className="border p-4 md:p-6 rounded-lg shadow-md">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-500 mb-2">
-          {getImportanceTitle(post.title)}
+          {post.title}
         </h1>
+
+        <div>
+          <span className="font-semibold">Published:</span>
+          <span> {post.createdAt.toString().slice(0, 16)}</span>
+        </div>
 
         {/* Author and Date Information */}
         <Suspense fallback={<div className="">loading...</div>}>
@@ -42,7 +49,7 @@ const SinglePage = async ({ post }: SinglePostPage) => {
 
         {/* Description Section */}
         <div className="text-gray-300 text-base leading-relaxed">
-          <p>{post.body}</p>
+          <p>{post.desc}</p>
         </div>
       </div>
     </div>
