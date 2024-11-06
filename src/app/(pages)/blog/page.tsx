@@ -1,4 +1,4 @@
-import { getDatas } from "@/utils/FetchDataAPI";
+import { getDatas } from "@/lib/data";
 
 import BlogPage from "@/components/templates/BlogPage";
 

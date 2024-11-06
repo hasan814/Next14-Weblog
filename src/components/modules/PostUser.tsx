@@ -1,5 +1,5 @@
 import { PostUserProps } from "@/types";
-import { getUser } from "@/utils/FetchDataAPI";
+import { getUser } from "@/lib/data";
 
 import Image from "next/image";
 
@@ -15,7 +15,7 @@ const PostUser = async ({ userId }: PostUserProps) => {
           height={30}
           className="rounded-full"
         />
-        <span className="font-semibold">{user.username}</span>
+        <span className="font-semibold">{user.name}</span>
       </div>
       <div>
         <span className="font-semibold">Published:</span>
