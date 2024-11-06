@@ -1,7 +1,14 @@
+import { getImportanceTitle } from "@/utils/FunctionHelper";
+import { PostProps } from "@/types";
+
 import Image from "next/image";
 import Link from "next/link";
 
-const PostCard = () => {
+interface PostCardProps {
+  post: PostProps;
+}
+
+const PostCard = ({ post }: PostCardProps) => {
   return (
     <div className="flex flex-col gap-5 mb-8 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200">
       {/* Image and Date */}
@@ -24,13 +31,12 @@ const PostCard = () => {
 
       {/* Content */}
       <div className="space-y-2">
-        <h1 className="text-2xl font-bold text-gray-400">Title</h1>
-        <p className="text-gray-300">
-          Description of the post goes here. This should be a brief summary that
-          entices readers to learn more.
-        </p>
+        <h1 className="text-2xl font-bold text-gray-400">
+          {getImportanceTitle(post.title)}
+        </h1>
+        <p className="text-gray-300">{post.body}</p>
         <Link
-          href="/blog/post"
+          href={`/blog/${post.id}`}
           className="text-blue-600 font-semibold hover:underline"
         >
           READ MORE

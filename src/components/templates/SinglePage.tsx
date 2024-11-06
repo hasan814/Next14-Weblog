@@ -1,8 +1,9 @@
 import { AiOutlineArrowLeft } from "react-icons/ai";
+
 import Image from "next/image";
 import Link from "next/link";
 
-const SinglePage = () => {
+const SinglePage = async () => {
   return (
     <div className="p-4 md:p-8 lg:p-12">
       {/* Back Button */}
