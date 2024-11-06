@@ -9,3 +9,18 @@ export interface PostProps {
 export interface BlogPageProps {
     posts: PostProps[]
 }
+
+export interface SinglePostPage {
+    post: PostProps
+}
+
+export interface User {
+    id: number;
+    name: string;
+    username: string;
+    email: string
+}
+
+export interface PostUserProps {
+    userId: number
+}

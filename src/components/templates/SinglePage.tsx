@@ -1,9 +1,13 @@
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { getImportanceTitle } from "@/utils/FunctionHelper";
+import { SinglePostPage } from "@/types";
+import { Suspense } from "react";
 
+import PostUser from "../modules/PostUser";
 import Image from "next/image";
 import Link from "next/link";
 
-const SinglePage = async () => {
+const SinglePage = async ({ post }: SinglePostPage) => {
   return (
     <div className="p-4 md:p-8 lg:p-12">
       {/* Back Button */}
@@ -28,34 +32,17 @@ const SinglePage = async () => {
       {/* Post Content Section */}
       <div className="border p-4 md:p-6 rounded-lg shadow-md">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-500 mb-2">
-          Post Title
+          {getImportanceTitle(post.title)}
         </h1>
 
         {/* Author and Date Information */}
-        <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
-          <div className="flex items-center space-x-2">
-            <Image
-              src="https://img.icons8.com/fluency/96/gender-neutral-user--v1.png"
-              alt="avatar"
-              width={30}
-              height={30}
-              className="rounded-full"
-            />
-            <span className="font-semibold">Terry Jefferson</span>
-          </div>
-          <div>
-            <span className="font-semibold">Published:</span>
-            <span>01.01.2024</span>
-          </div>
-        </div>
+        <Suspense fallback={<div className="">loading...</div>}>
+          <PostUser userId={post.userId} />
+        </Suspense>
 
         {/* Description Section */}
         <div className="text-gray-300 text-base leading-relaxed">
-          <p>
-            Description of the post goes here. It provides insight and details
-            about the blog topic, engaging the reader with relevant information
-            and context.
-          </p>
+          <p>{post.body}</p>
         </div>
       </div>
     </div>
