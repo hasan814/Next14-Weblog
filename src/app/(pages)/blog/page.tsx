@@ -1,17 +1,10 @@
-import BlogPage from "@/components/templates/BlogPage";
-import { PostProps } from "@/types";
+import { getDatas } from "@/utils/FetchDataAPI";
 
-const getData = async (): Promise<PostProps[]> => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-    cache: "no-store",
-  });
-  if (!response.ok) throw new Error("Something went wrong");
-  return response.json();
-};
+import BlogPage from "@/components/templates/BlogPage";
 
 const Blog = async () => {
   // =========== Fetch Data ===============
-  const posts = await getData();
+  const posts = await getDatas();
 
   // =========== Rendering ===============
   return <BlogPage posts={posts} />;
