@@ -1,6 +1,5 @@
-import { getDatas } from "@/utils/FetchDataDB";
-
 import BlogPage from "@/components/templates/BlogPage";
+import { getDatas } from "@/utils/FetchData";
 
 const Blog = async () => {
   // =========== Fetch Data ===============

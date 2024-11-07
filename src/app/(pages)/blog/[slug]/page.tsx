@@ -1,5 +1,5 @@
 import SinglePage from "@/components/templates/SinglePage";
-import { getData } from "@/utils/FetchDataDB";
+import { getData } from "@/utils/FetchData";
 
 interface SingleProps {
   params: { slug: string };
