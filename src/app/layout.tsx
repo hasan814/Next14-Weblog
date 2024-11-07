@@ -5,6 +5,7 @@ import Header from "@/components/layouts/Header";
 
 import "./globals.css";
 import Footer from "@/components/layouts/Footer";
+import { SessionProvider } from "next-auth/react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,11 +33,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex flex-col justify-between min-h-screen">
-          <Header />
-          <main className="">{children}</main>
-          <Footer />
-        </div>
+        <SessionProvider>
+          <div className="flex flex-col justify-between min-h-screen">
+            <Header />
+            <main className="">{children}</main>
+            <Footer />
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );

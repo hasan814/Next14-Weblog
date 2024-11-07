@@ -5,6 +5,7 @@ import { connectDB } from "@/lib/connectDB"
 import { PostData } from "@/types/server"
 
 import Post from "@/model/PostModel"
+import { signIn } from "@/auth"
 
 // ============ Added Post ================
 export const addPost = async (formData: FormData): Promise<{ error?: string }> => {
@@ -41,3 +42,9 @@ export const deletePost = async (formData: FormData): Promise<{ error?: string; 
     }
 }
 
+
+// ============= Login Handler ================
+export const loginHandler = async () => {
+    "use server";
+    await signIn("github");
+};
