@@ -1,5 +1,6 @@
 "use client";
 
+import { logoutHandler } from "@/utils/Action";
 import { v4 as uuidv4 } from "uuid";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -7,11 +8,12 @@ import { NavLinks } from "@/utils/NavLinks";
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const Header = () => {
-  // ========== Authentication Status ===========
-  const session = true;
-  const isAdmin = false;
+  // ========== Session ===========
+  const { data } = useSession();
+  const isAdmin = true;
 
   // ========== PathName ===========
   const path = usePathname();
@@ -59,7 +61,7 @@ const Header = () => {
             {link.title}
           </Link>
         ))}
-        {session && isAdmin && (
+        {data && isAdmin && (
           <Link
             href="/admin"
             className="text-gray-200 hover:text-gray-600 transition-colors"
@@ -71,13 +73,15 @@ const Header = () => {
 
       {/* Authentication Buttons */}
       <div className="hidden md:flex space-x-4">
-        {session ? (
-          <button
-            onClick={handleLogout}
-            className="text-blue-600 bg-gray-200 py-1 px-6 hover:bg-transparent hover:text-gray-200 rounded-lg transition"
-          >
-            Logout
-          </button>
+        {data ? (
+          <form action={logoutHandler}>
+            <button
+              onClick={handleLogout}
+              className="text-blue-600 bg-gray-200 py-1 px-6 hover:bg-transparent hover:text-gray-200 rounded-lg transition"
+            >
+              Logout
+            </button>
+          </form>
         ) : (
           <Link
             href="/login"
@@ -143,7 +147,7 @@ const Header = () => {
                 {link.title}
               </Link>
             ))}
-            {session && isAdmin && (
+            {data && isAdmin && (
               <Link
                 href="/admin"
                 className="text-gray-200 hover:text-gray-600 transition-colors"
@@ -152,7 +156,7 @@ const Header = () => {
                 Admin Panel
               </Link>
             )}
-            {session ? (
+            {data ? (
               <button
                 onClick={handleLogout}
                 className="text-blue-600 bg-gray-200 py-1 px-6 hover:bg-transparent hover:text-gray-200 rounded-lg transition"
